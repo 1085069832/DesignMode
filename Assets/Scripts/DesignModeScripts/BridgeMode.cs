@@ -14,6 +14,7 @@ public class BridgeMode : MonoBehaviour
         SoldierCaptain soldierCap = new SoldierCaptain();
         soldierCap.SetWeapon(new WeaponRifle());
         soldierCap.Attack(Vector3.zero);
+
     }
 }
 
