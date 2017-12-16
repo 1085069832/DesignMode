@@ -10,11 +10,12 @@ public class BridgeMode : MonoBehaviour
         Shpere shpere = new Shpere(render);
         shpere.Draw();
         */
-
+        /*
         SoldierCaptain soldierCap = new SoldierCaptain();
-        soldierCap.SetWeapon(new WeaponRifle());
+        IWeaponAttr iWeaponAttr = new IWeaponAttr();
+        soldierCap.SetWeapon(new WeaponRifle(iWeaponAttr));
         soldierCap.Attack(Vector3.zero);
-
+        */
     }
 }
 

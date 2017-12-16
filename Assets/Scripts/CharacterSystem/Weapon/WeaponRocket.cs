@@ -5,9 +5,13 @@ using UnityEngine;
 
 public class WeaponRocket : IWeapon
 {
-    public override void Fire(Vector3 targetPosition)
+    public WeaponRocket(IWeaponAttr iWeaponAttr) : base(iWeaponAttr)
     {
-        Debug.Log("WeaponRocket");
+    }
+
+    protected override void DrawLine(Vector3 targetPosition)
+    {
+        SetLine(targetPosition, 0.04f, 0.04f);
     }
 }
 

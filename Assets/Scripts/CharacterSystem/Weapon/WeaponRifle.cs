@@ -5,9 +5,13 @@ using UnityEngine;
 
 public class WeaponRifle : IWeapon
 {
-    public override void Fire(Vector3 targetPosition)
+    public WeaponRifle(IWeaponAttr iWeaponAttr) : base(iWeaponAttr)
     {
-        Debug.Log("WeaponRifle");
+    }
+
+    protected override void DrawLine(Vector3 targetPosition)
+    {
+        SetLine(targetPosition, 0.03f, 0.03f);
     }
 }
 
