@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class IWeapon
 {
-    IWeaponAttr iWeaponAttr;
+    public IWeaponAttr iWeaponAttr;
 
     public IWeapon(IWeaponAttr iWeaponAttr)
     {

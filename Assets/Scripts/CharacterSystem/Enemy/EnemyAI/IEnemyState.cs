@@ -1,44 +1,41 @@
-﻿using System;
+﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using System.Text;
 
-public enum SoldierStateID
+public enum EnemyStateID
 {
     NullState,
-    Idle,
     Chase,
     Attack
 }
 
-public enum SoldierConditionState
+public enum EnemyConditionState
 {
     NullCondition,
-    SeeEnemy,
-    NoEnemy,
     CanAttack,
+    SeeSoldier
 }
 
-public abstract class ISoldierState
+public abstract class IEnemyState
 {
-    protected SoldierFSMSystem soldierFSMSystem;
-    public SoldierStateID stateID;
+    protected EnemyFSMSystem enemyFSMSystem;
+    public EnemyStateID stateID;
 
-    public ISoldierState(SoldierFSMSystem soldierFSMSystem)
+    public IEnemyState(EnemyFSMSystem enemyFSMSystem)
     {
-        this.soldierFSMSystem = soldierFSMSystem;
+        this.enemyFSMSystem = enemyFSMSystem;
     }
 
-    Dictionary<SoldierConditionState, SoldierStateID> mMap = new Dictionary<SoldierConditionState, SoldierStateID>();
+    Dictionary<EnemyConditionState, EnemyStateID> mMap = new Dictionary<EnemyConditionState, EnemyStateID>();
 
-    public void Add(SoldierConditionState conditionState, SoldierStateID stateID)
+    public void Add(EnemyConditionState conditionState, EnemyStateID stateID)
     {
-        if (conditionState == SoldierConditionState.NullCondition)
+        if (conditionState == EnemyConditionState.NullCondition)
         {
             Debug.LogError("conditionState:NullCondition"); return;
         }
 
-        if (stateID == SoldierStateID.NullState)
+        if (stateID == EnemyStateID.NullState)
         {
             Debug.LogError("stateID:NullState"); return;
         }
@@ -51,9 +48,9 @@ public abstract class ISoldierState
         mMap.Add(conditionState, stateID);
     }
 
-    public void Delete(SoldierConditionState conditionState)
+    public void Delete(EnemyConditionState conditionState)
     {
-        if (conditionState == SoldierConditionState.NullCondition)
+        if (conditionState == EnemyConditionState.NullCondition)
         {
             Debug.LogError("conditionState:NullCondition"); return;
         }
@@ -71,26 +68,25 @@ public abstract class ISoldierState
     /// </summary>
     /// <param name="stateID"></param>
     /// <returns></returns>
-    public SoldierStateID GetOutPutStateID(SoldierStateID stateID)
+    public EnemyStateID GetOutPutStateID(EnemyStateID stateID)
     {
-        if (stateID == SoldierStateID.NullState)
+        if (stateID == EnemyStateID.NullState)
         {
             Debug.LogError("不存在转换到[" + stateID + "]的条件");
-            return SoldierStateID.NullState;
+            return EnemyStateID.NullState;
         }
 
         if (mMap.ContainsValue(stateID) == false)
         {
             Debug.LogError("不存在转换到[" + stateID + "]的条件");
-            return SoldierStateID.NullState;
+            return EnemyStateID.NullState;
         }
 
         return stateID;
     }
 
     public virtual void OnStateLeave() { }
-    public virtual void OnStateBegin() { }
+    public virtual void OnStateBegin(Vector3 targetPosition) { }
     public abstract void Reason(List<ICharacter> c);
     public abstract void Act(List<ICharacter> c);
 }
-

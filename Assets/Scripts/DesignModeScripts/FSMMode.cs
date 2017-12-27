@@ -8,15 +8,15 @@ public class FSMMode : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        soldierFSMSystem = new SoldierFSMSystem();
+        soldierFSMSystem = new SoldierFSMSystem(new ISoldier());
         SoldierIdleState idleState = new SoldierIdleState(soldierFSMSystem);
-        idleState.Add(ConditionState.SeeEnemy, StateID.Chase);
+        idleState.Add(SoldierConditionState.SeeEnemy, SoldierStateID.Chase);
         SoldierChaseState chaseState = new SoldierChaseState(soldierFSMSystem);
-        chaseState.Add(ConditionState.CanAttack, StateID.Attack);
-        chaseState.Add(ConditionState.NoEnemy, StateID.Idle);
+        chaseState.Add(SoldierConditionState.CanAttack, SoldierStateID.Attack);
+        chaseState.Add(SoldierConditionState.NoEnemy, SoldierStateID.Idle);
         SoldierAttackState attackState = new SoldierAttackState(soldierFSMSystem);
-        attackState.Add(ConditionState.SeeEnemy, StateID.Chase);
-        attackState.Add(ConditionState.NoEnemy, StateID.Idle);
+        attackState.Add(SoldierConditionState.SeeEnemy, SoldierStateID.Chase);
+        attackState.Add(SoldierConditionState.NoEnemy, SoldierStateID.Idle);
 
         soldierFSMSystem.Add(idleState);
         soldierFSMSystem.Add(chaseState);
@@ -25,7 +25,7 @@ public class FSMMode : MonoBehaviour
 
     void FixedUpdate()
     {
-        soldierFSMSystem.Reason();
-        soldierFSMSystem.Act();
+        soldierFSMSystem.Reason(null);
+        soldierFSMSystem.Act(null);
     }
 }

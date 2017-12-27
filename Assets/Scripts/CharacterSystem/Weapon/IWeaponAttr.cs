@@ -11,5 +11,6 @@ public class IWeaponAttr
     public AudioSource audioSource;
     public AudioClip audioClip;
     public Light light;
+    public float AttackDistance;
 }
 

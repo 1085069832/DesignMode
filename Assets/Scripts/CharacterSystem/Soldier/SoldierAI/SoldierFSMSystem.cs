@@ -8,14 +8,21 @@ public class SoldierFSMSystem
     ISoldierState currentState;//当前的状态
     List<ISoldierState> soldierStateList = new List<ISoldierState>();
 
-    public void Reason()
+    public ISoldier iSoldier;
+
+    public SoldierFSMSystem(ISoldier iSoldier)
     {
-        currentState.Reason();
+        this.iSoldier = iSoldier;
     }
 
-    public void Act()
+    public void Reason(List<ICharacter> c)
     {
-        currentState.Act();
+        currentState.Reason(c);
+    }
+
+    public void Act(List<ICharacter> c)
+    {
+        currentState.Act(c);
     }
 
     public void Add(ISoldierState soldierState)
@@ -33,6 +40,7 @@ public class SoldierFSMSystem
         if (soldierStateList.Count == 0)
         {
             currentState = soldierState;
+            currentState.OnStateBegin();
         }
 
         soldierStateList.Add(soldierState);
@@ -53,20 +61,20 @@ public class SoldierFSMSystem
         soldierStateList.Remove(soldierState);
     }
 
-    public void ChangeState(StateID stateID)
+    public void ChangeState(SoldierStateID stateID)
     {
-        if (stateID == StateID.NullState)
+        if (stateID == SoldierStateID.NullState)
         {
             Debug.LogError("stateID为NullState"); return;
         }
 
-        StateID id = currentState.GetOutPutStateID(stateID);
+        SoldierStateID id = currentState.GetOutPutStateID(stateID);
 
-        if (id != StateID.NullState)
+        if (id != SoldierStateID.NullState)
         {
             for (int i = 0; i < soldierStateList.Count; i++)
             {
-                if(id == soldierStateList[i].stateID)
+                if (id == soldierStateList[i].stateID)
                 {
                     currentState.OnStateLeave();
                     currentState = soldierStateList[i];
